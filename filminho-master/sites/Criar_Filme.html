@@ -3,9 +3,56 @@
 	<header>
 		<title>Cadastrar Filmes</title>
 		<meta charset="UTF-8">
+				<script type="text/javascript" src="webjars/jquery/2.2.4/jquery.min.js"></script>
+		<script>
+		$(document).ready(function(){
+			
+			$("#btSave").click(function () {
+				var formData = {
+	    		nome : $("#titulo_filme").val(),
+	    		categorias : $("#categorias").val(),
+				sinopse : $("#sinopse").val()
+				}
+	    	
+	    	// DO POST
+	    	$.ajax({
+			type : "POST",
+			contentType : "application/json",
+			url :"#",
+			data : JSON.stringify(formData),
+			dataType : 'json',
+			success : function(result) {
+				if(result.status == "Done"){
+					$("#postResultDiv").html("<p style='background-color:#7FA7B0; color:white; padding:20px 20px 20px 20px'>" + 
+												"Post Successfully! <br>" +
+												"---> Customer's Info: Nome = " + 
+												result.data.nome + " ,Idade = " + result.data.idade + "</p>");
+					}else{
+						$("#postResultDiv").html("<strong>Error</strong>");
+					}
+					console.log(result);
+				},
+				error : function(e) {
+					alert("Error!")
+					console.log("ERROR: ", e);
+				}
+			});
+	    	
+	    	// Reset FormData after Posting
+	    	resetData();
+	 
+	    });
+	    
+	    function resetData(){
+	    	$("#titulo_filme").val("");
+	    	$("#sinopse").val("");
+	    }
+
+	});
+			</script>
 	</header>
 	<body>
-				<!--Menu - Parte superior-->
+			<!--Menu - Parte superior-->
 				<div>
 					<a href="index.html"><h2>Filminhos Legais</h2></a>
 				</div>
@@ -26,11 +73,11 @@
 			<br>
 			Sinopse:
 			<br>
-			 <textarea name="nome_filme"></textarea>
+			 <textarea name="sinopse"></textarea>
 		</form>
 		<br>
 		<p>Para tornar o filme mais atrativo adicione uma foto do mesmo<p/>
-		<input type="text" name="img_filme"><button type="button" >Procurar</button><br><br>
-		<button type="button" >Salvar</button>
+		<input type="text" name="img_filme"><button type="button">Procurar</button><br><br>
+		<button type="btSave" >Salvar</button>
 	<body>
 </html>
