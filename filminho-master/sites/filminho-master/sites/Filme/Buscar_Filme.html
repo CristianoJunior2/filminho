@@ -3,6 +3,55 @@
 	<head>
 	<title>Buscar Filmes</title>
 	<meta charset="UTF-8">
+	<script type="text/javascript" src="webjars/jquery/2.2.4/jquery.min.js"></script>
+		<script>
+		$(document).ready(function(){
+			var i = 0;
+
+			function tam(){	
+				$.get("/pessoa", function(data,status){
+					
+					if(data.length < 1){
+						window.alert("lista vazia");
+					}
+					else{
+						Mudarestado("pessoa");
+						if(i == 0){
+						    i=i+1;
+						}
+						else{
+							alert("ja criada!!");
+						}
+					}
+
+				});
+
+			}
+
+			function buscaElem(){
+				var elem = $("#valor").val();
+				$.get("pessoa/"+elem,function (data, status){
+					if(data == null){
+						alert("Valor nao encontrado!!");
+					}
+					else{
+						window.location.href = "http://localhost:8081/pessoa/"+ elem;
+					}
+				});
+
+			}
+
+			$("#btTeste").click(function(){
+					tam();
+			});
+			$("#btEscolha").click(function(){
+				buscaElem();
+			})
+
+		});
+
+
+		</script>
 	</head>
 	<body>
 	<!--Menu - Parte superior-->
